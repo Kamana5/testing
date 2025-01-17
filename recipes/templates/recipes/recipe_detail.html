@@ -1,0 +1,41 @@
+{% extends "recipes/base.html" %}
+{% block content %}
+<head>
+    <link rel="stylesheet" type="text/css" href="main.css"> <!-- Link to external CSS file -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            background-color: lightblue;
+            background-size: cover; 
+            background-position: center; 
+            background-repeat: no-repeat;
+        }
+        .card {
+            background-color: #FDF5E6;
+            background-size: cover; 
+            background-position: center;
+            background-repeat: no-repeat;
+            backround-border: 10px solid #FFDEAD	
+        }
+    </style>
+</head>
+<body>
+  <h1>Recipe # {{object.id}}</h1>
+  <div class="card my-4">
+    <div class="card-body">
+      <h5 class="card-title">{{ object.title }}</h5>
+      <h6 class="card-subtitle mb-2 text-muted">{{ object.author }}</h6>
+      <p class="card-text">{{ object.description|linebreaksbr }}</p>
+      <h6 class="card-subtitle mb-2 text-muted">
+        {{ object.updated_at|date:"F d, Y" }}
+      </h6>
+    </div>
+  </div>
+  {% if object.author == user or user.is_staff %}
+  <div class="col-4">
+      <a class="btn btn-outline-info" href="{% url 'recipes-update' object.id %}">Update</a>
+      <a class="btn btn-outline-danger" href="{% url 'recipes-delete' object.id %}">Delete</a>
+  </div>
+  {% endif %}
+</body>
+{% endblock content %}
